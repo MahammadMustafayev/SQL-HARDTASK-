@@ -150,7 +150,7 @@ CREATE TABLE BuyTicket
 --AS
 --INSERT INTO BuyTicket(HallId,SessionId,FilmId,CustomerId)
 --VALUES (@HallId,@SessionId,@FilmId,@CustomerId)
---SELECT * FROM Tickets
+--SELECT * FROM BuyTicket
 --WHERE HallId=@HallId and SessionId=@SessionId and FilmId=@FilmId and CustomerId=@CustomerId
 
 --EXEC usp_BuyTicket 1,2,3,4
@@ -163,7 +163,7 @@ CREATE TABLE BuyTicket
 --AS
 --BEGIN 
 --     DECLARE @Count int
---	 SELECT @Count =COUNT(*) FROM Tickets WHERE HallId < @HallId and SessionId < @SessionId
+--	 SELECT @Count =COUNT(*) FROM BuyTicket WHERE HallId < @HallId and SessionId < @SessionId
 --	 RETURN @Count
 --END
 
