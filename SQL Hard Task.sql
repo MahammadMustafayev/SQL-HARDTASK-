@@ -146,25 +146,29 @@ CREATE TABLE BuyTicket
 --SELECT * FROM Genres
 
 --1--
---CREATE PROCEDURE usp_BuyTicket @HallId int,@SessionId int, @FilmId int,@CustomerId int
---AS
---INSERT INTO BuyTicket(HallId,SessionId,FilmId,CustomerId)
---VALUES (@HallId,@SessionId,@FilmId,@CustomerId)
---SELECT * FROM BuyTicket
---WHERE HallId=@HallId and SessionId=@SessionId and FilmId=@FilmId and CustomerId=@CustomerId
+CREATE PROCEDURE usp_BuyTicket @HallId int,@SessionId int, @FilmId int,@CustomerId int
+AS
 
---EXEC usp_BuyTicket 1,2,3,4
+INSERT INTO BuyTicket(HallId,SessionId,FilmId,CustomerId)
+VALUES (@HallId,@SessionId,@FilmId,@CustomerId)
+SELECT * FROM Tickets 
+JOIN BuyTicket as b
+ON 
+b.Id=Tickets.Id
+WHERE HallId=@HallId and SessionId=@SessionId and FilmId=@FilmId and CustomerId=@CustomerId
 
+EXEC usp_BuyTicket 1,2,3,4
+--DROP PROCEDURE usp_BuyTicket
 
 --2--
 
---CREATE FUNCTION GetEmptySeat (@HallId int,@SessionId int)
---RETURNS int
---AS
---BEGIN 
---     DECLARE @Count int
---	 SELECT @Count =COUNT(*) FROM BuyTicket WHERE HallId < @HallId and SessionId < @SessionId
---	 RETURN @Count
---END
+CREATE FUNCTION GetEmptySeat (@HallId int,@SessionId int)
+RETURNS int
+AS
+BEGIN 
+     DECLARE @Count int
+	 SELECT @Count =COUNT(*) FROM BuyTicket WHERE HallId < @HallId and SessionId < @SessionId
+	 RETURN @Count
+END
 
---SELECT dbo.GetEmptySeat(1,3)
+SELECT dbo.GetEmptySeat(1,3)
